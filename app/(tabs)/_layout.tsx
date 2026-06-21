@@ -1,35 +1,46 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
+import { StyleSheet } from 'react-native';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+    <Tabs 
+      screenOptions={{ 
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: '#FF6B00',
+        tabBarInactiveTintColor: '#94A3B8',
+        tabBarBackground: () => (
+          <BlurView tint="dark" intensity={80} style={StyleSheet.absoluteFill} />
+        ),
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Jaap',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="counter" size={26} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="mantras"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Mantras',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="book-open-page-variant" size={26} color={color} />,
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    position: 'absolute',
+    borderTopWidth: 0,
+    elevation: 0,
+    height: 65,
+    paddingBottom: 10,
+    backgroundColor: 'transparent',
+  }
+});
